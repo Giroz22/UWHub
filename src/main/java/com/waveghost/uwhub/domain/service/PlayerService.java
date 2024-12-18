@@ -2,11 +2,14 @@ package com.waveghost.uwhub.domain.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.waveghost.uwhub.controller.dtos.request.PlayerRQ;
 import com.waveghost.uwhub.controller.dtos.response.PlayerRS;
 import com.waveghost.uwhub.domain.abstarct_service.IPlayerService;
+import com.waveghost.uwhub.infrastructure.repositories.PlayerRepository;
+import com.waveghost.uwhub.utils.mappers.PlayerMapper;
 
 import lombok.AllArgsConstructor;
 
@@ -14,6 +17,12 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class PlayerService implements IPlayerService
 {
+
+    @Autowired
+    private PlayerRepository playerRepository;
+    
+    @Autowired
+    private PlayerMapper playerMapper;
 
     @Override
     public PlayerRS create(PlayerRQ request) {

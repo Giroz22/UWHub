@@ -2,11 +2,14 @@ package com.waveghost.uwhub.domain.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.waveghost.uwhub.controller.dtos.request.TeamRQ;
 import com.waveghost.uwhub.controller.dtos.response.TeamRS;
 import com.waveghost.uwhub.domain.abstarct_service.ITeamService;
+import com.waveghost.uwhub.infrastructure.repositories.TeamRepository;
+import com.waveghost.uwhub.utils.mappers.TeamMapper;
 
 import lombok.AllArgsConstructor;
 
@@ -14,6 +17,12 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class TeamServiceImpl implements ITeamService
 {
+
+    @Autowired
+    private TeamRepository teamRepository;
+    
+    @Autowired
+    private TeamMapper teamMapper;
 
     @Override
     public TeamRS create(TeamRQ request) {
