@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.waveghost.uwhub.controller.dtos.request.PlayerRQ;
-import com.waveghost.uwhub.controller.dtos.response.PlayerRS;
+import com.waveghost.uwhub.api.dtos.request.PlayerRQ;
+import com.waveghost.uwhub.api.dtos.response.PlayerRS;
 import com.waveghost.uwhub.domain.abstarct_service.IPlayerService;
 import com.waveghost.uwhub.infrastructure.repositories.PlayerRepository;
 import com.waveghost.uwhub.utils.mappers.PlayerMapper;

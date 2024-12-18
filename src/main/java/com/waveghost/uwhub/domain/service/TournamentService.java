@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.waveghost.uwhub.controller.dtos.request.TournamentRQ;
-import com.waveghost.uwhub.controller.dtos.response.TournamentRS;
+import com.waveghost.uwhub.api.dtos.request.TournamentRQ;
+import com.waveghost.uwhub.api.dtos.response.TournamentRS;
 import com.waveghost.uwhub.domain.abstarct_service.ITournamentService;
 import com.waveghost.uwhub.infrastructure.repositories.TournamentRepository;
 import com.waveghost.uwhub.utils.mappers.TournamentMapper;

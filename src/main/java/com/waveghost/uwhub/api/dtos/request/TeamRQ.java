@@ -1,4 +1,4 @@
-package com.waveghost.uwhub.controller.dtos.request;
+package com.waveghost.uwhub.api.dtos.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

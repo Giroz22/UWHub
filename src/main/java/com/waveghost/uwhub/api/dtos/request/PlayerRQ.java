@@ -1,4 +1,4 @@
-package com.waveghost.uwhub.controller.dtos.response;
+package com.waveghost.uwhub.api.dtos.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,7 +11,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
-public class TournamentRS {
-    private String id;
+public class PlayerRQ {
     private String name;
+    private int number;
+    private String position;
 }
