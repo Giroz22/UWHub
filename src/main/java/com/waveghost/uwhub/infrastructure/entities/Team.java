@@ -30,6 +30,8 @@ public class Team {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private String name;
+    private int points;
+    private int goals;
 
     @ManyToOne
     @JoinColumn(
