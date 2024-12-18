@@ -1,0 +1,19 @@
+package com.waveghost.uwhub.infrastructure.abstarct_service;
+
+import com.waveghost.uwhub.api.dtos.request.TournamentRQ;
+import com.waveghost.uwhub.api.dtos.response.TournamentRS;
+import com.waveghost.uwhub.infrastructure.abstarct_service.CRUD.ICreate;
+import com.waveghost.uwhub.infrastructure.abstarct_service.CRUD.IDelete;
+import com.waveghost.uwhub.infrastructure.abstarct_service.CRUD.IFindAll;
+import com.waveghost.uwhub.infrastructure.abstarct_service.CRUD.IFindById;
+import com.waveghost.uwhub.infrastructure.abstarct_service.CRUD.IUpdate;
+
+public interface ITournamentService extends
+    ICreate<TournamentRQ,TournamentRS>,
+    IFindAll<TournamentRS>,
+    IFindById<TournamentRS, String>,
+    IUpdate<TournamentRQ,TournamentRS,String>,
+    IDelete<String>
+{
+    
+}

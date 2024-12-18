@@ -3,7 +3,7 @@ package com.waveghost.uwhub.api.controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.waveghost.uwhub.domain.abstarct_service.IPlayerService;
+import com.waveghost.uwhub.infrastructure.abstarct_service.IPlayerService;
 
 import lombok.AllArgsConstructor;
 
