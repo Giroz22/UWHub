@@ -11,6 +11,7 @@ import com.waveghost.uwhub.api.dtos.response.PlayerRS;
 import com.waveghost.uwhub.domain.entities.Player;
 import com.waveghost.uwhub.domain.repositories.PlayerRepository;
 import com.waveghost.uwhub.infrastructure.abstarct_service.IPlayerService;
+import com.waveghost.uwhub.utils.exceptions.IdNotFoundException;
 import com.waveghost.uwhub.utils.mappers.PlayerMapper;
 
 import lombok.AllArgsConstructor;
@@ -65,6 +66,8 @@ public class PlayerService implements IPlayerService
     }
     
     private Player find(String id){
-        return this.playerRepository.findById(id).orElseThrow();
+        return this.playerRepository.findById(id).orElseThrow(
+            () -> new IdNotFoundException("Team", id)
+        );
     }
 }
