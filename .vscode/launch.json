@@ -1,0 +1,14 @@
+{
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Spring Boot-UwHubApplication<uwhub>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "com.waveghost.uwhub.UwHubApplication",
+      "projectName": "uwhub",
+      "args": "",
+      "envFile": "${workspaceFolder}/.env"
+    }
+  ]
+}
