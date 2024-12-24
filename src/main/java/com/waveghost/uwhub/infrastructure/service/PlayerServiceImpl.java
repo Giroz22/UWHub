@@ -65,7 +65,7 @@ public class PlayerServiceImpl implements IPlayerService
         this.playerRepository.delete(player);
     }
     
-    private PlayerEntity find(String id){
+    public PlayerEntity find(String id){
         return this.playerRepository.findById(id).orElseThrow(
             () -> new IdNotFoundException("Player", id)
         );

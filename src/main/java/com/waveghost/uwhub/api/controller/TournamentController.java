@@ -49,7 +49,7 @@ public class TournamentController {
             @ApiResponse(responseCode = "400", description = "Invalid input data")
         }
     )
-    @PostMapping("")
+    @PostMapping
     public ResponseEntity<TournamentRS> create(@RequestBody @Valid TournamentRQ request) {
         return ResponseEntity
             .status(HttpStatus.CREATED)
@@ -67,7 +67,7 @@ public class TournamentController {
             )
         }
     )
-    @GetMapping("")
+    @GetMapping
     public ResponseEntity<List<TournamentRS>> getAll() {
         return ResponseEntity
             .status(HttpStatus.OK)

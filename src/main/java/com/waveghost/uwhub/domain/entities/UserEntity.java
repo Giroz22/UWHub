@@ -32,9 +32,16 @@ public class UserEntity {
     private String passsword;
 
     @OneToMany(
+        mappedBy = "owner",
         cascade = CascadeType.ALL,
-        orphanRemoval = true,
-        mappedBy = "user"
+        orphanRemoval = true
     )
-    private List<UserTourneyEntity> userTournament; 
+    private List<TournamentEntity> tournaments;
+
+    @OneToMany(
+        mappedBy = "user",
+        cascade = CascadeType.ALL,
+        orphanRemoval = true
+    )
+    private List<StaffEntity> staff; 
 }

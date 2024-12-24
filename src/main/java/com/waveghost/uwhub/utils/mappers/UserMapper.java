@@ -16,6 +16,7 @@ public interface UserMapper {
     public List<UserRS> entityToResponse(List<UserEntity> entity);
     
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "userTournament", ignore = true)
+    @Mapping(target = "staff", ignore = true)
+    @Mapping(target = "tournaments", ignore = true)
     public UserEntity requestToEntity(UserRQ request);
 }

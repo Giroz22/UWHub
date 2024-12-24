@@ -9,8 +9,10 @@ import org.springframework.stereotype.Service;
 import com.waveghost.uwhub.api.dtos.request.TournamentRQ;
 import com.waveghost.uwhub.api.dtos.response.TournamentRS;
 import com.waveghost.uwhub.domain.entities.TournamentEntity;
+import com.waveghost.uwhub.domain.entities.UserEntity;
 import com.waveghost.uwhub.domain.repositories.TournamentRepository;
 import com.waveghost.uwhub.infrastructure.abstarct_service.ITournamentService;
+import com.waveghost.uwhub.infrastructure.abstarct_service.IUserService;
 import com.waveghost.uwhub.utils.exceptions.IdNotFoundException;
 import com.waveghost.uwhub.utils.mappers.TournamentMapper;
 
@@ -22,17 +24,22 @@ public class TournamentServiceImpl implements ITournamentService
 {
     @Autowired
     private TournamentRepository tournamentRepository;
-    
+
     @Autowired
     private TournamentMapper tournamentMapper;
+
+    @Autowired
+    private IUserService userService;
 
     @Override
     public TournamentRS create(TournamentRQ request) {
         TournamentEntity tournament = this.tournamentMapper.requestToEntity(request);
         
+        UserEntity owner = this.userService.find(request.getUserId());
+        tournament.setOwner(owner);
         TournamentEntity tournamentSaved = this.tournamentRepository.save(tournament);
-
-        return this.tournamentMapper.entityToResponse(tournamentSaved);
+        
+        return this.tournamentMapper.entityToResponse(this.find(tournamentSaved.getId()));
     }
 
     @Override

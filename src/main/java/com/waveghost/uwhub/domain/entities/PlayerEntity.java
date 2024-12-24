@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "tournaments")
+@Table(name = "players")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
