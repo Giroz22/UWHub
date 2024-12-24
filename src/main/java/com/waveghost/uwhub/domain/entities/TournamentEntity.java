@@ -44,4 +44,11 @@ public class TournamentEntity {
         fetch = FetchType.LAZY
     )
     private ModalityEntity modality;
+
+    @OneToMany(
+        mappedBy = "tournament",
+        cascade = CascadeType.ALL,
+        orphanRemoval = true
+    )
+    private List<UserTourneyEntity> userTournament;
 }
