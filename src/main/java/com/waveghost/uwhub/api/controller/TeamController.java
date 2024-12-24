@@ -18,16 +18,35 @@ import com.waveghost.uwhub.api.dtos.request.TeamRQ;
 import com.waveghost.uwhub.api.dtos.response.TeamRS;
 import com.waveghost.uwhub.infrastructure.abstarct_service.ITeamService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
 @RestController
 @RequestMapping(path = "/teams")
 @AllArgsConstructor
+@Tag(name = "Teams", description = "Operations related to managing teams in the system")
 public class TeamController {
+
     @Autowired
     private ITeamService teamService;
 
+    @Operation(
+        summary = "Create a new team",
+        description = "Adds a new team to the system",
+        responses = {
+            @ApiResponse(
+                responseCode = "201",
+                description = "Team created successfully",
+                content = @Content(mediaType = "application/json", schema = @Schema(implementation = TeamRS.class))
+            ),
+            @ApiResponse(responseCode = "400", description = "Invalid input data")
+        }
+    )
     @PostMapping("")
     public ResponseEntity<TeamRS> create(@RequestBody @Valid TeamRQ request) {
         return ResponseEntity
@@ -35,6 +54,17 @@ public class TeamController {
             .body(this.teamService.create(request));
     }    
 
+    @Operation(
+        summary = "Retrieve all teams",
+        description = "Gets a list of all teams in the system",
+        responses = {
+            @ApiResponse(
+                responseCode = "200",
+                description = "List of teams retrieved successfully",
+                content = @Content(mediaType = "application/json", schema = @Schema(implementation = TeamRS.class))
+            )
+        }
+    )
     @GetMapping("")
     public ResponseEntity<List<TeamRS>> getAll() {
         return ResponseEntity
@@ -42,6 +72,18 @@ public class TeamController {
             .body(this.teamService.findAll());
     }
 
+    @Operation(
+        summary = "Retrieve a team by ID",
+        description = "Gets the details of a team specified by their ID",
+        responses = {
+            @ApiResponse(
+                responseCode = "200",
+                description = "Team details retrieved successfully",
+                content = @Content(mediaType = "application/json", schema = @Schema(implementation = TeamRS.class))
+            ),
+            @ApiResponse(responseCode = "404", description = "Team not found")
+        }
+    )
     @GetMapping("/{id}")
     public ResponseEntity<TeamRS> getById(@PathVariable Integer id) {
         return ResponseEntity
@@ -49,6 +91,19 @@ public class TeamController {
             .body(this.teamService.findById(id));
     }
     
+    @Operation(
+        summary = "Update a team",
+        description = "Updates the details of an existing team",
+        responses = {
+            @ApiResponse(
+                responseCode = "200",
+                description = "Team updated successfully",
+                content = @Content(mediaType = "application/json", schema = @Schema(implementation = TeamRS.class))
+            ),
+            @ApiResponse(responseCode = "400", description = "Invalid input data"),
+            @ApiResponse(responseCode = "404", description = "Team not found")
+        }
+    )
     @PutMapping("/{id}")
     public ResponseEntity<TeamRS> update(@PathVariable Integer id, @RequestBody @Valid TeamRQ request) {
         return ResponseEntity
@@ -56,6 +111,14 @@ public class TeamController {
             .body(this.teamService.update(request, id));
     }
 
+    @Operation(
+        summary = "Delete a team",
+        description = "Deletes an existing team specified by their ID",
+        responses = {
+            @ApiResponse(responseCode = "204", description = "Team deleted successfully"),
+            @ApiResponse(responseCode = "404", description = "Team not found")
+        }
+    )
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Integer id){
         this.teamService.delete(id);

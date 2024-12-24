@@ -17,22 +17,52 @@ import com.waveghost.uwhub.api.dtos.request.UserRQ;
 import com.waveghost.uwhub.api.dtos.response.UserRS;
 import com.waveghost.uwhub.infrastructure.abstarct_service.IUserService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
 @RestController
 @RequestMapping(path = "/users")
 @AllArgsConstructor
+@Tag(name = "Users", description = "Operations related to managing users in the system")
 public class UserController {
+
     private IUserService userService;
 
+    @Operation(
+        summary = "Create a new user",
+        description = "Adds a new user to the system",
+        responses = {
+            @ApiResponse(
+                responseCode = "201",
+                description = "User created successfully",
+                content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserRS.class))
+            ),
+            @ApiResponse(responseCode = "400", description = "Invalid input data")
+        }
+    )
     @PostMapping("")
-    public ResponseEntity<UserRS> create(@RequestBody @Valid UserRQ request) {
+    public ResponseEntity<UserRS> create(@Valid @RequestBody UserRQ request) {
         return ResponseEntity
             .status(HttpStatus.CREATED)
             .body(this.userService.create(request));
     }    
 
+    @Operation(
+        summary = "Retrieve all users",
+        description = "Gets a list of all users in the system",
+        responses = {
+            @ApiResponse(
+                responseCode = "200",
+                description = "List of users retrieved successfully",
+                content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserRS.class))
+            )
+        }
+    )
     @GetMapping("")
     public ResponseEntity<List<UserRS>> getAll() {
         return ResponseEntity
@@ -40,6 +70,18 @@ public class UserController {
             .body(this.userService.findAll());
     }
 
+    @Operation(
+        summary = "Retrieve a user by ID",
+        description = "Gets the details of a user specified by their ID",
+        responses = {
+            @ApiResponse(
+                responseCode = "200",
+                description = "User details retrieved successfully",
+                content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserRS.class))
+            ),
+            @ApiResponse(responseCode = "404", description = "User not found")
+        }
+    )
     @GetMapping("/{id}")
     public ResponseEntity<UserRS> getById(@PathVariable String id) {
         return ResponseEntity
@@ -47,13 +89,34 @@ public class UserController {
             .body(this.userService.findById(id));
     }
     
+    @Operation(
+        summary = "Update a user",
+        description = "Updates the details of an existing user",
+        responses = {
+            @ApiResponse(
+                responseCode = "200",
+                description = "User updated successfully",
+                content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserRS.class))
+            ),
+            @ApiResponse(responseCode = "400", description = "Invalid input data"),
+            @ApiResponse(responseCode = "404", description = "User not found")
+        }
+    )
     @PutMapping("/{id}")
-    public ResponseEntity<UserRS> update(@PathVariable String id, @RequestBody @Valid UserRQ request) {
+    public ResponseEntity<UserRS> update(@PathVariable String id, @Valid @RequestBody UserRQ request) {
         return ResponseEntity
             .status(HttpStatus.OK)
             .body(this.userService.update(request, id));
     }
 
+    @Operation(
+        summary = "Delete a user",
+        description = "Deletes an existing user specified by their ID",
+        responses = {
+            @ApiResponse(responseCode = "204", description = "User deleted successfully"),
+            @ApiResponse(responseCode = "404", description = "User not found")
+        }
+    )
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable String id){
         this.userService.delete(id);
