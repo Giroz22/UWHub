@@ -2,7 +2,7 @@ package com.waveghost.uwhub.utils.mappers;
 
 import com.waveghost.uwhub.api.dtos.request.TournamentRQ;
 import com.waveghost.uwhub.api.dtos.response.TournamentRS;
-import com.waveghost.uwhub.domain.entities.Tournament;
+import com.waveghost.uwhub.domain.entities.TournamentEntity;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.processing.Generated;
@@ -10,14 +10,14 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-12-23T18:00:01-0500",
+    date = "2024-12-23T20:20:50-0500",
     comments = "version: 1.6.3, compiler: Eclipse JDT (IDE) 3.41.0.v20241217-1506, environment: Java 17.0.13 (Eclipse Adoptium)"
 )
 @Component
 public class TournamentMapperImpl implements TournamentMapper {
 
     @Override
-    public TournamentRS entityToResponse(Tournament entity) {
+    public TournamentRS entityToResponse(TournamentEntity entity) {
         if ( entity == null ) {
             return null;
         }
@@ -31,29 +31,29 @@ public class TournamentMapperImpl implements TournamentMapper {
     }
 
     @Override
-    public List<TournamentRS> entityToResponse(List<Tournament> entity) {
+    public List<TournamentRS> entityToResponse(List<TournamentEntity> entity) {
         if ( entity == null ) {
             return null;
         }
 
         List<TournamentRS> list = new ArrayList<TournamentRS>( entity.size() );
-        for ( Tournament tournament : entity ) {
-            list.add( entityToResponse( tournament ) );
+        for ( TournamentEntity tournamentEntity : entity ) {
+            list.add( entityToResponse( tournamentEntity ) );
         }
 
         return list;
     }
 
     @Override
-    public Tournament requestToEntity(TournamentRQ request) {
+    public TournamentEntity requestToEntity(TournamentRQ request) {
         if ( request == null ) {
             return null;
         }
 
-        Tournament.TournamentBuilder tournament = Tournament.builder();
+        TournamentEntity.TournamentEntityBuilder tournamentEntity = TournamentEntity.builder();
 
-        tournament.name( request.getName() );
+        tournamentEntity.name( request.getName() );
 
-        return tournament.build();
+        return tournamentEntity.build();
     }
 }

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.waveghost.uwhub.api.dtos.request.PlayerRQ;
 import com.waveghost.uwhub.api.dtos.response.PlayerRS;
-import com.waveghost.uwhub.domain.entities.Player;
+import com.waveghost.uwhub.domain.entities.PlayerEntity;
 import com.waveghost.uwhub.domain.repositories.PlayerRepository;
 import com.waveghost.uwhub.infrastructure.abstarct_service.IPlayerService;
 import com.waveghost.uwhub.utils.exceptions.IdNotFoundException;
@@ -29,9 +29,9 @@ public class PlayerService implements IPlayerService
 
     @Override
     public PlayerRS create(PlayerRQ request) {
-        Player player = this.playerMapper.requestToEntity(request);
+        PlayerEntity player = this.playerMapper.requestToEntity(request);
 
-        Player playerSaved = this.playerRepository.save(player);
+        PlayerEntity playerSaved = this.playerRepository.save(player);
 
         return this.playerMapper.entityToResponse(playerSaved);
     }
@@ -48,24 +48,24 @@ public class PlayerService implements IPlayerService
 
     @Override
     public PlayerRS update(PlayerRQ requets, String id) {
-        Player playerUpdate = this.playerMapper.requestToEntity(requets);
-        Player playerNow = this.find(id);
+        PlayerEntity playerUpdate = this.playerMapper.requestToEntity(requets);
+        PlayerEntity playerNow = this.find(id);
 
         BeanUtils.copyProperties(playerUpdate, playerNow);
 
-        Player playerUpdated = this.playerRepository.save(playerNow);
+        PlayerEntity playerUpdated = this.playerRepository.save(playerNow);
 
         return this.playerMapper.entityToResponse(playerUpdated);
     }
 
     @Override
     public void delete(String id) {
-        Player player = this.find(id);
+        PlayerEntity player = this.find(id);
 
         this.playerRepository.delete(player);
     }
     
-    private Player find(String id){
+    private PlayerEntity find(String id){
         return this.playerRepository.findById(id).orElseThrow(
             () -> new IdNotFoundException("Team", id)
         );

@@ -2,7 +2,7 @@ package com.waveghost.uwhub.utils.mappers;
 
 import com.waveghost.uwhub.api.dtos.request.PlayerRQ;
 import com.waveghost.uwhub.api.dtos.response.PlayerRS;
-import com.waveghost.uwhub.domain.entities.Player;
+import com.waveghost.uwhub.domain.entities.PlayerEntity;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.processing.Generated;
@@ -10,14 +10,14 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-12-23T17:58:16-0500",
+    date = "2024-12-23T20:20:41-0500",
     comments = "version: 1.6.3, compiler: Eclipse JDT (IDE) 3.41.0.v20241217-1506, environment: Java 17.0.13 (Eclipse Adoptium)"
 )
 @Component
 public class PlayerMapperImpl implements PlayerMapper {
 
     @Override
-    public PlayerRS entityToResponse(Player entity) {
+    public PlayerRS entityToResponse(PlayerEntity entity) {
         if ( entity == null ) {
             return null;
         }
@@ -33,31 +33,31 @@ public class PlayerMapperImpl implements PlayerMapper {
     }
 
     @Override
-    public List<PlayerRS> entityToResponse(List<Player> entity) {
+    public List<PlayerRS> entityToResponse(List<PlayerEntity> entity) {
         if ( entity == null ) {
             return null;
         }
 
         List<PlayerRS> list = new ArrayList<PlayerRS>( entity.size() );
-        for ( Player player : entity ) {
-            list.add( entityToResponse( player ) );
+        for ( PlayerEntity playerEntity : entity ) {
+            list.add( entityToResponse( playerEntity ) );
         }
 
         return list;
     }
 
     @Override
-    public Player requestToEntity(PlayerRQ request) {
+    public PlayerEntity requestToEntity(PlayerRQ request) {
         if ( request == null ) {
             return null;
         }
 
-        Player.PlayerBuilder player = Player.builder();
+        PlayerEntity.PlayerEntityBuilder playerEntity = PlayerEntity.builder();
 
-        player.name( request.getName() );
-        player.number( request.getNumber() );
-        player.position( request.getPosition() );
+        playerEntity.name( request.getName() );
+        playerEntity.number( request.getNumber() );
+        playerEntity.position( request.getPosition() );
 
-        return player.build();
+        return playerEntity.build();
     }
 }

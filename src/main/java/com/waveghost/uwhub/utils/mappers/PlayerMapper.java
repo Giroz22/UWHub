@@ -8,14 +8,14 @@ import org.mapstruct.MappingConstants;
 
 import com.waveghost.uwhub.api.dtos.request.PlayerRQ;
 import com.waveghost.uwhub.api.dtos.response.PlayerRS;
-import com.waveghost.uwhub.domain.entities.Player;
+import com.waveghost.uwhub.domain.entities.PlayerEntity;
 
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface PlayerMapper{
-    public PlayerRS entityToResponse(Player entity);
-    public List<PlayerRS> entityToResponse(List<Player> entity);
+    public PlayerRS entityToResponse(PlayerEntity entity);
+    public List<PlayerRS> entityToResponse(List<PlayerEntity> entity);
     
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "team", ignore = true)
-    public Player requestToEntity(PlayerRQ request);
+    public PlayerEntity requestToEntity(PlayerRQ request);
 }

@@ -1,11 +1,15 @@
 package com.waveghost.uwhub.domain.entities;
 
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,24 +18,31 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "tournaments")
+@Table(name = "teams")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @Builder
-public class Player {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private String id;
+public class TeamEntity {   
+    
+    @Id 
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
     private String name;
-    private int number;
-    private String position;
+    private int points;
+    private int goals;
 
     @ManyToOne
     @JoinColumn(
-        name = "team_id"        
+        name = "tournament_id"        
     )
-    private Team team;
+    private TournamentEntity tournament;
+
+    @OneToMany(
+        mappedBy = "team",
+        cascade = CascadeType.ALL,
+        orphanRemoval = true
+    )
+    private List<PlayerEntity> players;
 }

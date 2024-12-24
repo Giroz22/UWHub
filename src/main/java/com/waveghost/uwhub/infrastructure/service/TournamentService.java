@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.waveghost.uwhub.api.dtos.request.TournamentRQ;
 import com.waveghost.uwhub.api.dtos.response.TournamentRS;
-import com.waveghost.uwhub.domain.entities.Tournament;
+import com.waveghost.uwhub.domain.entities.TournamentEntity;
 import com.waveghost.uwhub.domain.repositories.TournamentRepository;
 import com.waveghost.uwhub.infrastructure.abstarct_service.ITournamentService;
 import com.waveghost.uwhub.utils.exceptions.IdNotFoundException;
@@ -28,9 +28,9 @@ public class TournamentService implements ITournamentService
 
     @Override
     public TournamentRS create(TournamentRQ request) {
-        Tournament tournament = this.tournamentMapper.requestToEntity(request);
+        TournamentEntity tournament = this.tournamentMapper.requestToEntity(request);
         
-        Tournament tournamentSaved = this.tournamentRepository.save(tournament);
+        TournamentEntity tournamentSaved = this.tournamentRepository.save(tournament);
 
         return this.tournamentMapper.entityToResponse(tournamentSaved);
     }
@@ -42,30 +42,30 @@ public class TournamentService implements ITournamentService
 
     @Override
     public TournamentRS findById(String id) {
-        Tournament tournament = this.find(id);
+        TournamentEntity tournament = this.find(id);
 
         return this.tournamentMapper.entityToResponse(tournament);
     }
 
     @Override
     public TournamentRS update(TournamentRQ requets, String id) {
-        Tournament newTournament =  this.tournamentMapper.requestToEntity(requets);
-        Tournament actualTournament = this.find(id);
+        TournamentEntity newTournament =  this.tournamentMapper.requestToEntity(requets);
+        TournamentEntity actualTournament = this.find(id);
         BeanUtils.copyProperties(newTournament, actualTournament);
 
-        Tournament tournamentUpdated = this.tournamentRepository.save(actualTournament);
+        TournamentEntity tournamentUpdated = this.tournamentRepository.save(actualTournament);
 
         return this.tournamentMapper.entityToResponse(tournamentUpdated);
     }
 
     @Override
     public void delete(String id) {
-        Tournament tournament = this.find(id);
+        TournamentEntity tournament = this.find(id);
         
         this.tournamentRepository.delete(tournament);
     }
 
-    public Tournament find(String id){
+    public TournamentEntity find(String id){
         return this.tournamentRepository.findById(id).orElseThrow(
             () -> new IdNotFoundException("Tournament", id.toString())
         );
