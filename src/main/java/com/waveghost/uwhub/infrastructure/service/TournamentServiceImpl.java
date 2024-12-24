@@ -18,7 +18,7 @@ import lombok.AllArgsConstructor;
 
 @Service
 @AllArgsConstructor
-public class TournamentService implements ITournamentService
+public class TournamentServiceImpl implements ITournamentService
 {
     @Autowired
     private TournamentRepository tournamentRepository;

@@ -18,7 +18,7 @@ import lombok.AllArgsConstructor;
 
 @Service
 @AllArgsConstructor
-public class PlayerService implements IPlayerService
+public class PlayerServiceImpl implements IPlayerService
 {
 
     @Autowired
