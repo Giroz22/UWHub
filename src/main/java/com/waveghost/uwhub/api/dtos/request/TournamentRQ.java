@@ -1,5 +1,6 @@
 package com.waveghost.uwhub.api.dtos.request;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,5 +13,6 @@ import lombok.Setter;
 @Setter
 @Builder
 public class TournamentRQ {
+    @NotBlank(message = "The name is required")
     private String name;
 }

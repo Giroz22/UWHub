@@ -17,6 +17,7 @@ import com.waveghost.uwhub.api.dtos.request.PlayerRQ;
 import com.waveghost.uwhub.api.dtos.response.PlayerRS;
 import com.waveghost.uwhub.infrastructure.abstarct_service.IPlayerService;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
 @RestController
@@ -26,10 +27,10 @@ public class PlayerController {
     private IPlayerService playerService;
 
     @PostMapping("")
-    public ResponseEntity<PlayerRS> create(@RequestBody PlayerRQ entity) {
+    public ResponseEntity<PlayerRS> create(@Valid @RequestBody PlayerRQ request) {
         return ResponseEntity
             .status(HttpStatus.CREATED)
-            .body(this.playerService.create(entity));
+            .body(this.playerService.create(request));
     }    
 
     @GetMapping("")
@@ -47,10 +48,10 @@ public class PlayerController {
     }
     
     @PutMapping("/{id}")
-    public ResponseEntity<PlayerRS> update(@PathVariable String id, @RequestBody PlayerRQ entity) {
+    public ResponseEntity<PlayerRS> update(@PathVariable String id, @Valid @RequestBody PlayerRQ request) {
         return ResponseEntity
             .status(HttpStatus.OK)
-            .body(this.playerService.update(entity, id));
+            .body(this.playerService.update(request, id));
     }
 
     @DeleteMapping("/{id}")

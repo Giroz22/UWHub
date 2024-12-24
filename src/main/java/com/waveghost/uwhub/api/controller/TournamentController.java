@@ -12,6 +12,7 @@ import com.waveghost.uwhub.api.dtos.request.TournamentRQ;
 import com.waveghost.uwhub.api.dtos.response.TournamentRS;
 import com.waveghost.uwhub.infrastructure.abstarct_service.ITournamentService;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -30,10 +31,10 @@ public class TournamentController {
     private ITournamentService tournamentService;
 
     @PostMapping("")
-    public ResponseEntity<TournamentRS> create(@RequestBody TournamentRQ entity) {
+    public ResponseEntity<TournamentRS> create(@RequestBody @Valid TournamentRQ request) {
         return ResponseEntity
             .status(HttpStatus.CREATED)
-            .body(this.tournamentService.create(entity));
+            .body(this.tournamentService.create(request));
     }    
 
     @GetMapping("")
@@ -51,10 +52,10 @@ public class TournamentController {
     }
     
     @PutMapping("/{id}")
-    public ResponseEntity<TournamentRS> update(@PathVariable String id, @RequestBody TournamentRQ entity) {
+    public ResponseEntity<TournamentRS> update(@PathVariable String id, @RequestBody @Valid TournamentRQ request) {
         return ResponseEntity
             .status(HttpStatus.OK)
-            .body(this.tournamentService.update(entity, id));
+            .body(this.tournamentService.update(request, id));
     }
 
     @DeleteMapping("/{id}")

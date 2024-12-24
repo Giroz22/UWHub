@@ -17,6 +17,7 @@ import com.waveghost.uwhub.api.dtos.request.UserRQ;
 import com.waveghost.uwhub.api.dtos.response.UserRS;
 import com.waveghost.uwhub.infrastructure.abstarct_service.IUserService;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
 @RestController
@@ -26,10 +27,10 @@ public class UserController {
     private IUserService userService;
 
     @PostMapping("")
-    public ResponseEntity<UserRS> create(@RequestBody UserRQ entity) {
+    public ResponseEntity<UserRS> create(@RequestBody @Valid UserRQ request) {
         return ResponseEntity
             .status(HttpStatus.CREATED)
-            .body(this.userService.create(entity));
+            .body(this.userService.create(request));
     }    
 
     @GetMapping("")
@@ -47,10 +48,10 @@ public class UserController {
     }
     
     @PutMapping("/{id}")
-    public ResponseEntity<UserRS> update(@PathVariable String id, @RequestBody UserRQ entity) {
+    public ResponseEntity<UserRS> update(@PathVariable String id, @RequestBody @Valid UserRQ request) {
         return ResponseEntity
             .status(HttpStatus.OK)
-            .body(this.userService.update(entity, id));
+            .body(this.userService.update(request, id));
     }
 
     @DeleteMapping("/{id}")

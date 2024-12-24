@@ -18,6 +18,7 @@ import com.waveghost.uwhub.api.dtos.request.TeamRQ;
 import com.waveghost.uwhub.api.dtos.response.TeamRS;
 import com.waveghost.uwhub.infrastructure.abstarct_service.ITeamService;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
 @RestController
@@ -28,10 +29,10 @@ public class TeamController {
     private ITeamService teamService;
 
     @PostMapping("")
-    public ResponseEntity<TeamRS> create(@RequestBody TeamRQ entity) {
+    public ResponseEntity<TeamRS> create(@RequestBody @Valid TeamRQ request) {
         return ResponseEntity
             .status(HttpStatus.CREATED)
-            .body(this.teamService.create(entity));
+            .body(this.teamService.create(request));
     }    
 
     @GetMapping("")
@@ -49,10 +50,10 @@ public class TeamController {
     }
     
     @PutMapping("/{id}")
-    public ResponseEntity<TeamRS> update(@PathVariable Integer id, @RequestBody TeamRQ entity) {
+    public ResponseEntity<TeamRS> update(@PathVariable Integer id, @RequestBody @Valid TeamRQ request) {
         return ResponseEntity
             .status(HttpStatus.OK)
-            .body(this.teamService.update(entity, id));
+            .body(this.teamService.update(request, id));
     }
 
     @DeleteMapping("/{id}")
