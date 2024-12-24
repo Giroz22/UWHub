@@ -67,7 +67,7 @@ public class PlayerService implements IPlayerService
     
     private PlayerEntity find(String id){
         return this.playerRepository.findById(id).orElseThrow(
-            () -> new IdNotFoundException("Team", id)
+            () -> new IdNotFoundException("Player", id)
         );
     }
 }
