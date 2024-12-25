@@ -1,5 +1,6 @@
 package com.waveghost.uwhub.domain.entities;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
@@ -44,5 +45,6 @@ public class TeamEntity {
         cascade = CascadeType.ALL,
         orphanRemoval = true
     )
-    private List<PlayerEntity> players;
+    @Builder.Default
+    private List<PlayerEntity> players = new ArrayList<PlayerEntity>();
 }

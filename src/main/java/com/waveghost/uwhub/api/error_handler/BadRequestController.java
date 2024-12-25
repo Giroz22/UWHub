@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import com.waveghost.uwhub.api.dtos.errors.BaseErrorResponse;
 import com.waveghost.uwhub.api.dtos.errors.ErrorResponse;
 import com.waveghost.uwhub.api.dtos.errors.ErrorsResponse;
+import com.waveghost.uwhub.utils.exceptions.BadRequestException;
 import com.waveghost.uwhub.utils.exceptions.IdNotFoundException;
 
 @RestControllerAdvice
@@ -35,4 +36,14 @@ public class BadRequestController {
         return ErrorsResponse.builder().errors(Errors).status(HttpStatus.BAD_REQUEST.name())
             .code(HttpStatus.BAD_REQUEST.value()).build();
     }
+
+    @ExceptionHandler(BadRequestException.class)
+    public BaseErrorResponse notOwner(BadRequestException exception){
+        return ErrorResponse.builder()
+        .error(exception.getMessage())
+        .status(HttpStatus.BAD_REQUEST.name())
+        .code(HttpStatus.BAD_REQUEST.value())
+        .build();
+    }
+
 }

@@ -18,5 +18,4 @@ public interface IUserService extends
     IDelete<String>,
     IFind<UserEntity, String>    
 {
-    
 }

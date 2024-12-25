@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.waveghost.uwhub.domain.entities.StaffEntity;
 
-public interface UserTourneyRepository extends JpaRepository<StaffEntity, String>{
+public interface StaffRepository extends JpaRepository<StaffEntity, String>{
     
 }

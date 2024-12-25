@@ -35,13 +35,15 @@ public class StaffEntity {
 
     @ManyToOne
     @JoinColumn(
-        name = "user_id"
+        name = "user_id",
+        nullable = false
     )
     private UserEntity user;
 
     @ManyToOne
     @JoinColumn(
-        name = "tournament_id"
+        name = "tournament_id",
+        nullable = false
     )
     private TournamentEntity tournament;
 }

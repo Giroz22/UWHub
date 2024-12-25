@@ -1,7 +1,5 @@
 package com.waveghost.uwhub.api.dtos.request;
 
-import com.waveghost.uwhub.utils.enums.RoleTourney;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -14,6 +12,7 @@ import lombok.Setter;
 @Setter
 @Builder
 public class StaffRQ {
-    private RoleTourney role;
+    private String tournamentId;
+    private String ownerId;
     private String userId;
 }

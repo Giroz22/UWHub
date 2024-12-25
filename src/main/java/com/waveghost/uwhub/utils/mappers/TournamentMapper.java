@@ -12,10 +12,12 @@ import com.waveghost.uwhub.api.dtos.response.TournamentRS;
 import com.waveghost.uwhub.domain.entities.StaffEntity;
 import com.waveghost.uwhub.domain.entities.TournamentEntity;
 
-@Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
+@Mapper(
+    componentModel = MappingConstants.ComponentModel.SPRING,
+    uses = StaffMapper.class
+)
 public interface TournamentMapper{
 
-    @Mapping(target = "staff", expression = "java(new ArrayList<>())")
     public TournamentRS entityToResponse(TournamentEntity entity);
 
     public List<TournamentRS> entityToResponse(List<TournamentEntity> entity);

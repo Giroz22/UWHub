@@ -60,9 +60,11 @@ public class UserServiceImpl implements IUserService{
         this.userRepository.delete(user);
     }
     
+    @Override
     public UserEntity find(String id){
         return this.userRepository.findById(id).orElseThrow(
             () -> new IdNotFoundException("User", id)
         );
     }
+
 }

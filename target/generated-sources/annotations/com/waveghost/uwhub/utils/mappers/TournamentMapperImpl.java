@@ -8,15 +8,19 @@ import com.waveghost.uwhub.domain.entities.UserEntity;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.processing.Generated;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-12-24T15:22:42-0500",
+    date = "2024-12-25T17:32:39-0500",
     comments = "version: 1.6.3, compiler: Eclipse JDT (IDE) 3.41.0.v20241217-1506, environment: Java 17.0.13 (Eclipse Adoptium)"
 )
 @Component
 public class TournamentMapperImpl implements TournamentMapper {
+
+    @Autowired
+    private StaffMapper staffMapper;
 
     @Override
     public TournamentRS entityToResponse(TournamentEntity entity) {
@@ -29,8 +33,7 @@ public class TournamentMapperImpl implements TournamentMapper {
         tournamentRS.id( entity.getId() );
         tournamentRS.name( entity.getName() );
         tournamentRS.owner( userEntityToUserRS( entity.getOwner() ) );
-
-        tournamentRS.staff( new ArrayList<>() );
+        tournamentRS.staff( staffMapper.entityToResponse( entity.getStaff() ) );
 
         return tournamentRS.build();
     }
