@@ -8,18 +8,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.waveghost.uwhub.api.dtos.request.TournamentRQ;
 import com.waveghost.uwhub.api.dtos.response.TournamentRS;
 import com.waveghost.uwhub.infrastructure.abstarct_service.ITournamentService;
 
-import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -35,26 +29,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 public class TournamentController {
     
     @Autowired
-    private ITournamentService tournamentService;
-
-    @Operation(
-        summary = "Create a new tournament",
-        description = "Adds a new tournament to the system",
-        responses = {
-            @ApiResponse(
-                responseCode = "201",
-                description = "Tournament created successfully",
-                content = @Content(mediaType = "application/json", schema = @Schema(implementation = TournamentRS.class))
-            ),
-            @ApiResponse(responseCode = "400", description = "Invalid input data")
-        }
-    )
-    @PostMapping
-    public ResponseEntity<TournamentRS> create(@RequestBody @Valid TournamentRQ request) {
-        return ResponseEntity
-            .status(HttpStatus.CREATED)
-            .body(this.tournamentService.create(request));
-    }    
+    private ITournamentService tournamentService;    
 
     @Operation(
         summary = "Retrieve all tournaments",
@@ -91,39 +66,5 @@ public class TournamentController {
         return ResponseEntity
             .status(HttpStatus.OK)
             .body(this.tournamentService.findById(id));
-    }
-    
-    @Operation(
-        summary = "Update a tournament",
-        description = "Updates the details of an existing tournament",
-        responses = {
-            @ApiResponse(
-                responseCode = "200",
-                description = "Tournament updated successfully",
-                content = @Content(mediaType = "application/json", schema = @Schema(implementation = TournamentRS.class))
-            ),
-            @ApiResponse(responseCode = "400", description = "Invalid input data"),
-            @ApiResponse(responseCode = "404", description = "Tournament not found")
-        }
-    )
-    @PutMapping("/{id}")
-    public ResponseEntity<TournamentRS> update(@PathVariable String id, @RequestBody @Valid TournamentRQ request) {
-        return ResponseEntity
-            .status(HttpStatus.OK)
-            .body(this.tournamentService.update(request, id));
-    }
-
-    @Operation(
-        summary = "Delete a tournament",
-        description = "Deletes an existing tournament specified by their ID",
-        responses = {
-            @ApiResponse(responseCode = "204", description = "Tournament deleted successfully"),
-            @ApiResponse(responseCode = "404", description = "Tournament not found")
-        }
-    )
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable String id){
-        this.tournamentService.delete(id);
-        return ResponseEntity.noContent().build();
-    }
+    }    
 }

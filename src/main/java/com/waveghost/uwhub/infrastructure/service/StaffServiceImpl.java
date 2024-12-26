@@ -52,7 +52,7 @@ public class StaffServiceImpl implements IStaffService{
         UserEntity user = this.userService.find(request.getUserId());
         TournamentEntity tournament = this.tournamentService.find(request.getTournamentId());
 
-        this.validIfUserIsOwner(tournament, owner);
+        UserServiceImpl.validIfUserIsOwner(tournament, owner);
         this.validIfExistStaff(user, tournament);
 
         staff.setRole(RoleTourney.STAFF);
@@ -84,7 +84,7 @@ public class StaffServiceImpl implements IStaffService{
         UserEntity owner = this.userService.find(ownerId);
         TournamentEntity tournament = this.tournamentService.find(tournamentId);
         
-        this.validIfUserIsOwner(tournament, owner);
+        UserServiceImpl.validIfUserIsOwner(tournament, owner);
 
         //Remove this staff of both relations
         tournament.getStaff().remove(staff);
@@ -127,13 +127,4 @@ public class StaffServiceImpl implements IStaffService{
             );
     }
 
-    private void validIfUserIsOwner(TournamentEntity tournament, UserEntity user){
-        if(!tournament.getOwner().equals(user)) 
-            throw new BadRequestException(
-                String.format("The user %s is not the owner of the tournament %s",
-                    user.getName(), 
-                    tournament.getName()
-                )
-            );
-    }
 }

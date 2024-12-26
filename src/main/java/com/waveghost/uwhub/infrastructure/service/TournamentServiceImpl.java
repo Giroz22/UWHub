@@ -16,6 +16,7 @@ import com.waveghost.uwhub.infrastructure.abstarct_service.IUserService;
 import com.waveghost.uwhub.utils.exceptions.IdNotFoundException;
 import com.waveghost.uwhub.utils.mappers.TournamentMapper;
 
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 
 @Service
@@ -32,11 +33,16 @@ public class TournamentServiceImpl implements ITournamentService
     private IUserService userService;
 
     @Override
-    public TournamentRS create(TournamentRQ request) {
+    @Transactional
+    public TournamentRS create(TournamentRQ request, String userId) {
         TournamentEntity tournament = this.tournamentMapper.requestToEntity(request);
         
-        UserEntity owner = this.userService.find(request.getUserId());
+        UserEntity owner = this.userService.find(userId);
         tournament.setOwner(owner);
+
+        //Validations
+        UserServiceImpl.validIfUserIsOwner(tournament, owner);
+
         TournamentEntity tournamentSaved = this.tournamentRepository.save(tournament);
         
         return this.tournamentMapper.entityToResponse(this.find(tournamentSaved.getId()));
@@ -55,26 +61,36 @@ public class TournamentServiceImpl implements ITournamentService
     }
 
     @Override
-    public TournamentRS update(TournamentRQ requets, String id) {
-        TournamentEntity newTournament =  this.tournamentMapper.requestToEntity(requets);
-        TournamentEntity actualTournament = this.find(id);
-        BeanUtils.copyProperties(newTournament, actualTournament);
+    @Transactional
+    public TournamentRS update(TournamentRQ requets, String tournamentId, String ownerId ) {
+        UserEntity owner = this.userService.find(ownerId);
+        TournamentEntity tournamentActual = this.find(tournamentId);
+        
+        BeanUtils.copyProperties(requets, tournamentActual);
 
-        TournamentEntity tournamentUpdated = this.tournamentRepository.save(actualTournament);
+        //Validations
+        UserServiceImpl.validIfUserIsOwner(tournamentActual, owner);
+
+        TournamentEntity tournamentUpdated = this.tournamentRepository.save(tournamentActual);
 
         return this.tournamentMapper.entityToResponse(tournamentUpdated);
     }
 
     @Override
-    public void delete(String id) {
-        TournamentEntity tournament = this.find(id);
+    @Transactional
+    public void delete(String tournamentId, String ownerId) {
+        TournamentEntity tournament = this.find(tournamentId);
+        UserEntity owner = this.userService.find(ownerId);
+
+        //Validations
+        UserServiceImpl.validIfUserIsOwner(tournament, owner);
         
         this.tournamentRepository.delete(tournament);
     }
 
-    public TournamentEntity find(String id){
-        return this.tournamentRepository.findById(id).orElseThrow(
-            () -> new IdNotFoundException("Tournament", id.toString())
+    public TournamentEntity find(String tournamentId){
+        return this.tournamentRepository.findById(tournamentId).orElseThrow(
+            () -> new IdNotFoundException("Tournament", tournamentId.toString())
         );
     }
     

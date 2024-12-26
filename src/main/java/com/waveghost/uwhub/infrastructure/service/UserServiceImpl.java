@@ -8,9 +8,11 @@ import org.springframework.stereotype.Service;
 
 import com.waveghost.uwhub.api.dtos.request.UserRQ;
 import com.waveghost.uwhub.api.dtos.response.UserRS;
+import com.waveghost.uwhub.domain.entities.TournamentEntity;
 import com.waveghost.uwhub.domain.entities.UserEntity;
 import com.waveghost.uwhub.domain.repositories.UserRepository;
 import com.waveghost.uwhub.infrastructure.abstarct_service.IUserService;
+import com.waveghost.uwhub.utils.exceptions.BadRequestException;
 import com.waveghost.uwhub.utils.exceptions.IdNotFoundException;
 import com.waveghost.uwhub.utils.mappers.UserMapper;
 
@@ -67,4 +69,13 @@ public class UserServiceImpl implements IUserService{
         );
     }
 
+    public static void validIfUserIsOwner(TournamentEntity tournament, UserEntity user){
+        if(!tournament.getOwner().equals(user)) 
+            throw new BadRequestException(
+                String.format("The user %s is not the owner of the tournament %s",
+                    user.getName(), 
+                    tournament.getName()
+                )
+            );
+    }
 }

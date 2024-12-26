@@ -15,10 +15,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.waveghost.uwhub.api.dtos.request.StaffRQ;
+import com.waveghost.uwhub.api.dtos.request.TournamentRQ;
 import com.waveghost.uwhub.api.dtos.request.UserRQ;
 import com.waveghost.uwhub.api.dtos.response.StaffRS;
+import com.waveghost.uwhub.api.dtos.response.TournamentRS;
 import com.waveghost.uwhub.api.dtos.response.UserRS;
 import com.waveghost.uwhub.infrastructure.abstarct_service.IStaffService;
+import com.waveghost.uwhub.infrastructure.abstarct_service.ITournamentService;
 import com.waveghost.uwhub.infrastructure.abstarct_service.IUserService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -38,8 +41,11 @@ public class UserController {
     @Autowired
     private IUserService userService;
     @Autowired
+    private ITournamentService tournamentService; 
+    @Autowired
     private IStaffService staffService;
 
+    // ======== User endpoints ========
     @Operation(
         summary = "Create a new user",
         description = "Adds a new user to the system",
@@ -130,6 +136,61 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
 
+    // ======== Tournament endpoints ========
+    @Operation(
+        summary = "Create a new tournament",
+        description = "Adds a new tournament to the system",
+        responses = {
+            @ApiResponse(
+                responseCode = "201",
+                description = "Tournament created successfully",
+                content = @Content(mediaType = "application/json", schema = @Schema(implementation = TournamentRS.class))
+            ),
+            @ApiResponse(responseCode = "400", description = "Invalid input data")
+        }
+    )
+    @PostMapping("/{userId}/tournaments")
+    public ResponseEntity<TournamentRS> create(@PathVariable String userId, @RequestBody @Valid TournamentRQ request) {
+        return ResponseEntity
+            .status(HttpStatus.CREATED)
+            .body(this.tournamentService.create(request, userId));
+    }
+
+    @Operation(
+        summary = "Update a tournament",
+        description = "Updates the details of an existing tournament",
+        responses = {
+            @ApiResponse(
+                responseCode = "200",
+                description = "Tournament updated successfully",
+                content = @Content(mediaType = "application/json", schema = @Schema(implementation = TournamentRS.class))
+            ),
+            @ApiResponse(responseCode = "400", description = "Invalid input data"),
+            @ApiResponse(responseCode = "404", description = "Tournament not found")
+        }
+    )
+    @PutMapping("/{ownerId}/tournament/{tournamentId}")
+    public ResponseEntity<TournamentRS> update(@PathVariable String ownerId, @PathVariable String tournamentId, @RequestBody @Valid TournamentRQ request) {
+        return ResponseEntity
+            .status(HttpStatus.OK)
+            .body(this.tournamentService.update(request, tournamentId, ownerId));
+    }
+
+    @Operation(
+        summary = "Delete a tournament",
+        description = "Deletes an existing tournament specified by their ID",
+        responses = {
+            @ApiResponse(responseCode = "204", description = "Tournament deleted successfully"),
+            @ApiResponse(responseCode = "404", description = "Tournament not found")
+        }
+    )
+    @DeleteMapping("{ownerId}/tournament/{tournamentId}")
+    public ResponseEntity<Void> delete(@PathVariable String ownerId, @PathVariable String tournamentId){
+        this.tournamentService.delete(tournamentId, ownerId);
+        return ResponseEntity.noContent().build();
+    }
+
+    // ======== Staff endpoints ========
     @Operation(
         summary = "Create a new staff",
         description = "Adds a new staff to the system",

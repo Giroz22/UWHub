@@ -14,5 +14,4 @@ public interface IStaffService extends
     public StaffRS findById(String tournamentId, String staffId);
     public StaffEntity find(String tournamentId, String staffId);
     public void delete(String tournamentId, String ownerId, String staffId);
-
 }

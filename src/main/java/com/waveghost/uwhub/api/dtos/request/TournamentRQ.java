@@ -17,8 +17,4 @@ public class TournamentRQ {
     @NotBlank(message = "The name is required")
     @NotNull(message = "The name can't be null")
     private String name;
-
-    @NotBlank(message = "The user_id is required")
-    @NotNull(message = "The user_id can't be null")
-    private String userId;
 }
