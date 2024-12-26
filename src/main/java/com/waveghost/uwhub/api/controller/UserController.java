@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.waveghost.uwhub.api.dtos.request.StaffRQ;
 import com.waveghost.uwhub.api.dtos.request.TournamentRQ;
 import com.waveghost.uwhub.api.dtos.request.UserRQ;
 import com.waveghost.uwhub.api.dtos.response.StaffRS;
@@ -203,11 +202,11 @@ public class UserController {
             @ApiResponse(responseCode = "400", description = "Invalid input data")
         }
     )
-    @PostMapping("/staff")
-    public ResponseEntity<StaffRS> createStaff(@Valid @RequestBody StaffRQ request) {
+    @PostMapping("/{ownerId}/tournament/{tournamentId}/staff/{userId}")
+    public ResponseEntity<StaffRS> createStaff(@PathVariable String ownerId, @PathVariable String tournamentId, @PathVariable String userId) {
         return ResponseEntity
             .status(HttpStatus.CREATED)
-            .body(this.staffService.create(request));
+            .body(this.staffService.create(tournamentId, ownerId, userId));
     }    
 
     @Operation(
@@ -240,7 +239,7 @@ public class UserController {
             @ApiResponse(responseCode = "404", description = "Staff not found")
         }
     )
-    @GetMapping("/{ownerId}/tournament/{tournamentId}/staff/{staffId}")
+    @GetMapping("/tournament/{tournamentId}/staff/{staffId}")
     public ResponseEntity<StaffRS> getStaffById(@PathVariable String tournamentId, @PathVariable String staffId) {
         return ResponseEntity
             .status(HttpStatus.OK)

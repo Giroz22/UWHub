@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.waveghost.uwhub.api.dtos.request.StaffRQ;
 import com.waveghost.uwhub.api.dtos.response.StaffRS;
 import com.waveghost.uwhub.domain.entities.StaffEntity;
 import com.waveghost.uwhub.domain.entities.TournamentEntity;
@@ -46,18 +45,19 @@ public class StaffServiceImpl implements IStaffService{
 
     @Override
     @Transactional
-    public StaffRS create(StaffRQ request) {
-        StaffEntity staff = this.staffMapper.requestToEntity(request);
-        UserEntity owner = this.userService.find(request.getOwnerId());
-        UserEntity user = this.userService.find(request.getUserId());
-        TournamentEntity tournament = this.tournamentService.find(request.getTournamentId());
+    public StaffRS create(String tournamentId, String ownerId, String userId) {
+        UserEntity owner = this.userService.find(ownerId);
+        UserEntity user = this.userService.find(userId);
+        TournamentEntity tournament = this.tournamentService.find(tournamentId);
 
         UserServiceImpl.validIfUserIsOwner(tournament, owner);
         this.validIfExistStaff(user, tournament);
 
-        staff.setRole(RoleTourney.STAFF);
-        staff.setUser(user);
-        staff.setTournament(tournament);
+        StaffEntity staff = StaffEntity.builder()
+        .role(RoleTourney.STAFF)
+        .user(user)
+        .tournament(tournament)
+        .build();
 
         StaffEntity staffSaved = this.staffRepository.save(staff);
 

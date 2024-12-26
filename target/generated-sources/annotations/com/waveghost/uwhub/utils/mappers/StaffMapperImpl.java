@@ -1,6 +1,5 @@
 package com.waveghost.uwhub.utils.mappers;
 
-import com.waveghost.uwhub.api.dtos.request.StaffRQ;
 import com.waveghost.uwhub.api.dtos.response.StaffRS;
 import com.waveghost.uwhub.api.dtos.response.UserRS;
 import com.waveghost.uwhub.domain.entities.StaffEntity;
@@ -12,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-12-25T17:11:45-0500",
+    date = "2024-12-25T19:24:01-0500",
     comments = "version: 1.6.3, compiler: Eclipse JDT (IDE) 3.41.0.v20241217-1506, environment: Java 17.0.13 (Eclipse Adoptium)"
 )
 @Component
@@ -45,17 +44,6 @@ public class StaffMapperImpl implements StaffMapper {
         }
 
         return list;
-    }
-
-    @Override
-    public StaffEntity requestToEntity(StaffRQ request) {
-        if ( request == null ) {
-            return null;
-        }
-
-        StaffEntity.StaffEntityBuilder staffEntity = StaffEntity.builder();
-
-        return staffEntity.build();
     }
 
     protected UserRS userEntityToUserRS(UserEntity userEntity) {
